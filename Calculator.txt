@@ -1,0 +1,170 @@
+include emu8086.inc
+org 100h
+
+.data
+firstnumber dw ?
+secondnumber dw ?
+choice dw ?
+result dw ?
+
+.code
+main proc 
+    
+    print "Basic Calculator"
+    
+    MainMenu:
+    printn
+    print "Choose an Operaor You want to perfornm"
+    printn
+    print "Press 1 For Addition"
+    printn
+    print "Press 2 For Subtraction"
+    printn
+    print "Press 3 For Multiplication"
+    printn
+    print "Press 4 For Division"
+    printn
+    print "Press 5 For the Square of a Number"
+    printn
+    print "Press 6 For the Cubbe of a Number"
+    printn
+    print "Press 7 to Exit the Calculator "
+    printn
+    print "-->"
+    call scan_num
+    
+        ;uing cmp (compare) statement we will compare the given input
+        ;then we will jump to the specific function using jump (je) Statement
+                
+        cmp cx,1
+        je addition_1
+        
+        cmp cx,2
+        je subtraction_2
+        
+        cmp cx,3
+        je multiplication_3
+        
+        cmp cx,4
+        je division_4 
+        
+        cmp cx,5
+        je Square_5  
+                                 
+        cmp cx,6    
+        je Cube_6   
+        
+        cmp cx,7  
+        je exit_7
+        
+        
+addition_1:
+
+    printn 
+    print "Enter Your First Number --> "
+    call scan_num
+    mov firstnumber,cx
+    printn 
+    print "Enter Your Second Number --> "
+    call scan_num
+    mov secondnumber,cx
+    
+    add cx,firstnumber
+    mov ax,cx
+    printn
+    print "The Final Result after Addition of Number1 + Number2 = "
+    call print_num
+    mov result,ax
+    jmp MainMenu
+
+subtraction_2: 
+
+    printn 
+    print "Enter Your First Number --> "
+    call scan_num
+    mov firstnumber,cx
+    printn 
+    print "Enter Your Second Number --> "
+    call scan_num
+    mov secondnumber ,cx
+    
+    sub firstnumber,cx
+    mov ax,firstnumber
+    printn
+    print "The Final Result after Subtraction of Number1 - Number2 = "
+    call print_num
+    mov result,ax
+    jmp MainMenu
+    
+multiplication_3:
+
+    printn 
+    print "Enter Your First Number --> "
+    call scan_num
+    mov firstnumber,cx
+    printn 
+    print "Enter Your Second Number --> "
+    call scan_num
+    mov secondnumber,cx
+    mov ax,firstnumber 
+    mul cx
+    printn
+    print "The Final Result after multiplication of Number1 * Number2 = "
+    call print_num
+    mov result,ax
+    jmp MainMenu        
+    
+division_4:
+
+    printn 
+    print "Enter Your First Number --> "
+    call scan_num
+    mov firstnumber,cx
+    printn 
+    print "Enter Your Second Number -->"
+    call scan_num
+    mov secondnumber,cx
+    mov ax,firstnumber
+    div cx
+    printn
+    print "The Final Result after Division of Number1\Number2 = "
+    call print_num
+    mov result,ax
+    jmp MainMenu
+
+Square_5:
+
+
+    printn 
+    print "Enter the Number Whose Square You Want to Find--> "
+    call scan_num
+    mov firstnumber,cx
+    mov ax,firstnumber
+    mul cx  
+    printn
+    print "The Final Result after Square of Number = "
+    call print_num
+    mov result,ax
+    jmp MainMenu        
+
+Cube_6:
+
+    printn 
+    print "Enter the Number Whose Cube You Want to FInd--> "
+    call scan_num
+    mov firstnumber,cx
+    mov ax,firstnumber
+    mul cx
+    mul cx  
+    printn
+    print "The Final Result after Cube of Number = "
+    call print_num
+    mov result,ax
+    jmp MainMenu 
+           
+exit_7:
+main endp
+
+DEFINE_SCAN_NUM
+DEFINE_PRINT_NUM
+DEFINE_PRINT_NUM_UNS
